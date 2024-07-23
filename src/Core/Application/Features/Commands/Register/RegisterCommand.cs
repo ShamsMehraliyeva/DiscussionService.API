@@ -1,4 +1,4 @@
-﻿using Application.Features.Auth.Dtos;
+﻿using Domain.Dtos.Auth;
 using MediatR;
 
 namespace Application.Features.Commands.Register;

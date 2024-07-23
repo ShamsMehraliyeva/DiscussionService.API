@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Auth.Dtos
+﻿namespace Domain.Dtos.Auth
 {
     public class UserForRegisterDto
     {

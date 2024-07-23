@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.Auth;
 using Domain.Models.Auth;
 
-namespace Application.Features.Auth.Dtos;
+namespace Domain.Dtos.Auth;
 
 public class RefreshedTokenDto
 {

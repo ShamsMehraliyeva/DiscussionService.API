@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Token\" />
     <Folder Include="Services\Storage\" />
   </ItemGroup>
 

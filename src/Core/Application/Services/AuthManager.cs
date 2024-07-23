@@ -1,6 +1,6 @@
-﻿using Application.Contracts.Auth;
-using Application.Helpers.Security.TokenHelper;
+﻿using Application.Helpers.Security.TokenHelper;
 using Domain.Entities.Auth;
+using Domain.Models.Auth;
 
 namespace Application.Services;
 
@@ -18,7 +18,7 @@ public class AuthManager : IAuthService
         throw new NotImplementedException();
     }
 
-    public Task<AccessToken> CreateAccessToken(User user)
+    public Task<AccessTokenModel> CreateAccessToken(User user)
     {
         throw new NotImplementedException();
     }

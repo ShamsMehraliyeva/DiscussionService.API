@@ -1,6 +1,6 @@
-﻿namespace Application.Contracts.Auth;
+﻿namespace Domain.Models.Auth;
 
-public class TokenOptions
+public class TokenOptionsModel
 {
     public string Audience { get; set; }
     public string Issuer { get; set; }

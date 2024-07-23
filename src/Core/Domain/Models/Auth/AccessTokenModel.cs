@@ -1,6 +1,6 @@
-﻿namespace Application.Contracts.Auth;
+﻿namespace Domain.Models.Auth;
 
-public class AccessToken
+public class AccessTokenModel
 {
     public string Token { get; set; }
     public DateTime Expiration { get; set; }

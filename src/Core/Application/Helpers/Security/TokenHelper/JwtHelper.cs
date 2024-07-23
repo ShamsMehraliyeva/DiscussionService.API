@@ -1,7 +1,7 @@
-﻿using Application.Contracts.Auth;
-using Application.Extensions.Security;
+﻿using Application.Extensions.Security;
 using Application.Helpers.Security.Encryption;
 using Domain.Entities.Auth;
+using Domain.Models.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,16 +13,16 @@ namespace Application.Helpers.Security.TokenHelper;
 internal class JwtHelper : ITokenHelper
 {
     public IConfiguration _configuration { get; }
-    private readonly TokenOptions _tokenOptions;
+    private readonly TokenOptionsModel _tokenOptions;
     private DateTime _accessTokenExpiration;
 
     public JwtHelper(IConfiguration configuration)
     {
         _configuration = configuration;
-        _tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
+        _tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptionsModel>();
     }
 
-    public AccessToken CreateToken(User user)
+    public AccessTokenModel CreateToken(User user)
     {
         _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
         SecurityKey securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
@@ -45,7 +45,7 @@ internal class JwtHelper : ITokenHelper
         return refreshToken;
     }
 
-    public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
+    public JwtSecurityToken CreateJwtSecurityToken(TokenOptionsModel tokenOptions, User user,
                                                    SigningCredentials signingCredentials)
     {
         JwtSecurityToken jwt = new(

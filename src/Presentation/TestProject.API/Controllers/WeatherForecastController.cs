@@ -1,3 +1,4 @@
+using Application.CrossCuttingConcers.Logging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TestProject.API.Controllers
@@ -10,10 +11,10 @@ namespace TestProject.API.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
+        
+        private readonly ILoggerService _logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILoggerService logger)
         {
             _logger = logger;
         }
@@ -21,6 +22,7 @@ namespace TestProject.API.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.Information("Weather Forcast started executing...");
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

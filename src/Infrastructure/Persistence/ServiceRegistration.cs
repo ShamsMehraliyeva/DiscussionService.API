@@ -13,8 +13,8 @@ public static class ServiceRegistration
                                                             IConfiguration configuration)
     {
         services.AddDbContext<BaseDbContext>(options =>
-                                                 options.UseSqlServer(
-                                                     configuration.GetConnectionString("ConnectionString")));
+                                                 options.UseNpgsql(
+                                                     configuration.GetConnectionString("DiscussionServiceDbConnectionString")));
 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 

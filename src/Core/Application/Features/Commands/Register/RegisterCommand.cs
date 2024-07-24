@@ -1,18 +1,55 @@
-﻿using Domain.Dtos.Auth;
+﻿using Application.Repositories.Abstractions;
+using Application.Services;
+using Application.Utilities.Hashing;
+using Application.Utilities.JWT;
+using Domain.Entities.Auth;
 using MediatR;
 
 namespace Application.Features.Commands.Register;
 
 public class RegisterCommand : IRequest<RegisteredCommandResponse>
 {
-    public UserForRegisterDto UserForRegisterDto { get; set; }
-    public string IpAddress { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisteredCommandResponse>
     {
-        public Task<RegisteredCommandResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        private readonly IUserRepository _userRepository;
+        private readonly IAuthService _authService;
+
+        public RegisterCommandHandler(IUserRepository userRepository, IAuthService authService)
         {
-            RegisteredCommandResponse response = new();
-            return Task.FromResult(response);
+            _userRepository = userRepository;
+            _authService = authService;
+        }
+
+        public async Task<RegisteredCommandResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        {
+           byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+
+            User newUser = new()
+            {
+                Email = request.Email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Status = true
+            };
+
+            User createdUser = await _userRepository.AddAsync(newUser);
+            AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
+            RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser);
+            RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+            
+            RegisteredCommandResponse response = new()
+            {
+               RefreshToken = createdRefreshToken,
+                AccessToken = createdAccessToken
+            };
+            return response;
         }
     }
 }

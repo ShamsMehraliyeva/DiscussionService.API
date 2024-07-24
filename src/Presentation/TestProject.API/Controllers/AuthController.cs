@@ -16,5 +16,10 @@ namespace TestProject.API.Controllers
             var result = Mediator.Send(registerCommand).Result;
             return Created("", result);
         }
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login()
+        {
+            return Ok("");
+        }
     }
 }

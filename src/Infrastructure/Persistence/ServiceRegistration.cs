@@ -17,6 +17,7 @@ public static class ServiceRegistration
                                                      configuration.GetConnectionString("DiscussionServiceDbConnectionString")));
 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

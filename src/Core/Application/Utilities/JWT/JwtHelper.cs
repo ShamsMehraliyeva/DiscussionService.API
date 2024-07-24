@@ -1,51 +1,55 @@
 ﻿using Application.Extensions.Security;
-using Application.Helpers.Security.Encryption;
+using Application.Utilities.Encryption;
 using Domain.Entities.Auth;
-using Domain.Models.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace Application.Helpers.Security.TokenHelper;
+namespace Application.Utilities.JWT;
 
 internal class JwtHelper : ITokenHelper
 {
     public IConfiguration _configuration { get; }
-    private readonly TokenOptionsModel _tokenOptions;
+    private readonly TokenOptions _tokenOptions;
     private DateTime _accessTokenExpiration;
 
     public JwtHelper(IConfiguration configuration)
     {
         _configuration = configuration;
-        _tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptionsModel>();
+        _tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
     }
 
-    public AccessTokenModel CreateToken(User user)
+    public AccessToken CreateToken(User user)
     {
         _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
         SecurityKey securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
         SigningCredentials signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
         JwtSecurityToken jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials);
-        throw new NotImplementedException();
+        JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
+        string? token = jwtSecurityTokenHandler.WriteToken(jwt);
+        return new AccessToken
+        {
+            Token = token,
+            Expiration = _accessTokenExpiration
+        };
     }
 
-    public RefreshToken CreateRefreshToken(User user, string ipAddress)
+    public RefreshToken CreateRefreshToken(User user)
     {
         RefreshToken refreshToken = new()
         {
             UserId = user.Id,
             Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
             Expires = DateTime.UtcNow.AddDays(7),
-            Created = DateTime.UtcNow,
-            CreatedByIp = ipAddress
+            Created = DateTime.UtcNow
         };
 
         return refreshToken;
     }
 
-    public JwtSecurityToken CreateJwtSecurityToken(TokenOptionsModel tokenOptions, User user,
+    public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
                                                    SigningCredentials signingCredentials)
     {
         JwtSecurityToken jwt = new(

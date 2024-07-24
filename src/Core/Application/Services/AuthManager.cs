@@ -1,30 +1,34 @@
-﻿using Application.Helpers.Security.TokenHelper;
+﻿using Application.Repositories.Abstractions;
+using Application.Utilities.JWT;
 using Domain.Entities.Auth;
-using Domain.Models.Auth;
 
 namespace Application.Services;
 
 public class AuthManager : IAuthService
 {
     private readonly ITokenHelper _tokenHelper;
-
-    public AuthManager(ITokenHelper tokenHelper)
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
+    public AuthManager(ITokenHelper tokenHelper, IRefreshTokenRepository refreshTokenRepository)
     {
         _tokenHelper = tokenHelper;
+        _refreshTokenRepository = refreshTokenRepository;
     }
 
-    public Task<RefreshToken> AddRefreshToken(RefreshToken refreshToken)
+    public async Task<RefreshToken> AddRefreshToken(RefreshToken refreshToken)
     {
-        throw new NotImplementedException();
+        RefreshToken addedRefreshToken = await _refreshTokenRepository.AddAsync(refreshToken);
+        return addedRefreshToken;
     }
 
-    public Task<AccessTokenModel> CreateAccessToken(User user)
+    public async Task<AccessToken> CreateAccessToken(User user)
     {
-        throw new NotImplementedException();
+        AccessToken accessToken = _tokenHelper.CreateToken(user);
+        return accessToken;
     }
 
-    public Task<RefreshToken> CreateRefreshToken(User user, string ipAddress)
+    public async Task<RefreshToken> CreateRefreshToken(User user)
     {
-        throw new NotImplementedException();
+        RefreshToken refreshToken =  _tokenHelper.CreateRefreshToken(user);
+        return await Task.FromResult(refreshToken);
     }
 }

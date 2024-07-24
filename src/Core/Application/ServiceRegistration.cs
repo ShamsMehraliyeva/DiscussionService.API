@@ -1,4 +1,4 @@
-﻿using Application.Helpers.Security.TokenHelper;
+﻿using Application.Utilities.JWT;
 using Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

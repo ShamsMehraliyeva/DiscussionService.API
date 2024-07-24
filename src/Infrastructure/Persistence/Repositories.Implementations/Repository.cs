@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Persistence.Repositories.Implementations
 {
     public class Repository<T> : IRepository<T>
-            where T : Entity
+            where T : BaseEntity
     {
         public readonly DbContext Context;
         private readonly DbSet<T> _entitySet;

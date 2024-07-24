@@ -1,6 +1,6 @@
-﻿namespace Domain.Models.Auth;
+namespace Application.Utilities.JWT;
 
-public class AccessTokenModel
+public class AccessToken
 {
     public string Token { get; set; }
     public DateTime Expiration { get; set; }

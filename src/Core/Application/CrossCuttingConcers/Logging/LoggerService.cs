@@ -15,16 +15,16 @@ public class LoggerService:ILoggerService
                                              .Get<FileLogConfiguration>() ??
                                          throw new Exception(LogMessages.NullOptionsMessage);
          
-        string logFilePath = string.Format("{0}{1}", Directory.GetCurrentDirectory() + logConfig.FolderPath, ".txt");
+        string logFilePath = string.Format("{0}{1}", Directory.GetCurrentDirectory() + logConfig.FolderPath,".txt");
         
         _logger = new LoggerConfiguration()
             .WriteTo.Debug()
             .WriteTo.Console()
             .WriteTo.File(
                 logFilePath,
+                shared:true,
                 rollingInterval: RollingInterval.Day,
                 retainedFileCountLimit: null,
-                fileSizeLimitBytes: 5000000,
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}")
             .CreateLogger();
     }

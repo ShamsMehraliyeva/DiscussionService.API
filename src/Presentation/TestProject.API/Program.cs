@@ -1,5 +1,7 @@
 using Persistence;
 using Application;
+using Application.Pipelines;
+using MediatR;
 using TestProject.API.Middlewares;
 
 namespace TestProject.API
@@ -9,7 +11,9 @@ namespace TestProject.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
+            builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
+            
             // Add services to the container.
 
             builder.Services.AddControllers();

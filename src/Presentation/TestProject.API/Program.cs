@@ -1,5 +1,6 @@
 using Persistence;
 using Application;
+using TestProject.API.Middlewares;
 
 namespace TestProject.API
 {
@@ -21,14 +22,14 @@ namespace TestProject.API
 
 
             var app = builder.Build();
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+        
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
@@ -36,6 +37,8 @@ namespace TestProject.API
 
             app.MapControllers();
 
+            app.ConfigureMiddlewares();
+            
             app.Run();
         }
     }

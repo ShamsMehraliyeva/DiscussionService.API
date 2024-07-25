@@ -4,7 +4,7 @@ namespace Application.Utilities.JWT;
 
 public interface ITokenHelper
 {
-    AccessToken CreateToken(User user);
+    AccessTokenModel CreateToken(User user);
 
     RefreshToken CreateRefreshToken(User user);
 }

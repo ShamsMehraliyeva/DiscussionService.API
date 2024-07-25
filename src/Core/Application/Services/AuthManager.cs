@@ -20,10 +20,10 @@ public class AuthManager : IAuthService
         return addedRefreshToken;
     }
 
-    public async Task<AccessToken> CreateAccessToken(User user)
+    public async Task<AccessTokenModel> CreateAccessToken(User user)
     {
-        AccessToken accessToken = _tokenHelper.CreateToken(user);
-        return accessToken;
+        AccessTokenModel accessTokenModel = _tokenHelper.CreateToken(user);
+        return accessTokenModel;
     }
 
     public async Task<RefreshToken> CreateRefreshToken(User user)

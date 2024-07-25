@@ -4,9 +4,8 @@ public class RefreshToken:BaseEntity
 {
     public int UserId { get; set; }
     public string Token { get; set; }
-    public DateTime Expires { get; set; }
-    public DateTime Created { get; set; }
-    public string CreatedByIp { get; set; }
+    public DateTime ExpireDate { get; set; }
+    public DateTime CreateDate { get; set; }
 
 
     public virtual User User { get; set; }
@@ -15,12 +14,11 @@ public class RefreshToken:BaseEntity
     {
     }
 
-    public RefreshToken(int id, string token, DateTime expires, DateTime created, string createdByIp)
+    public RefreshToken(int id, string token, DateTime expireDate, DateTime createDate)
     {
         Id = id;
         Token = token;
-        Expires = expires;
-        Created = created;
-        CreatedByIp = createdByIp;
+        ExpireDate = expireDate;
+        CreateDate = createDate;
     }
 }

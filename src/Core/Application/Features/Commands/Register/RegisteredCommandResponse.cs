@@ -5,6 +5,6 @@ namespace Application.Features.Commands.Register;
 
 public class RegisteredCommandResponse
 {
-    public AccessToken AccessToken { get; set; }
-    public RefreshToken RefreshToken { get; set; }
+    public AccessTokenModel AccessToken { get; set; }
+    public RefreshTokenModel RefreshToken { get; set; }
 }

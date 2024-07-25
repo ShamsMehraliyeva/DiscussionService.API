@@ -21,7 +21,7 @@ internal class JwtHelper : ITokenHelper
         _tokenOptions = _configuration.GetSection("TokenOptions").Get<TokenOptions>();
     }
 
-    public AccessToken CreateToken(User user)
+    public AccessTokenModel CreateToken(User user)
     {
         _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
         SecurityKey securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
@@ -29,7 +29,7 @@ internal class JwtHelper : ITokenHelper
         JwtSecurityToken jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials);
         JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
         string? token = jwtSecurityTokenHandler.WriteToken(jwt);
-        return new AccessToken
+        return new AccessTokenModel
         {
             Token = token,
             Expiration = _accessTokenExpiration
@@ -42,8 +42,8 @@ internal class JwtHelper : ITokenHelper
         {
             UserId = user.Id,
             Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-            Expires = DateTime.UtcNow.AddDays(7),
-            Created = DateTime.UtcNow
+            ExpireDate = DateTime.UtcNow.AddDays(7),
+            CreateDate = DateTime.UtcNow
         };
 
         return refreshToken;

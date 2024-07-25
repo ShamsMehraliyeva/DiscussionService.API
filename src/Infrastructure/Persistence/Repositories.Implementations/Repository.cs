@@ -37,16 +37,20 @@ namespace Persistence.Repositories.Implementations
         public virtual T Add(T entity)
         {
             var objToReturn = _entitySet.Add(entity);
+            Context.SaveChanges();
             return objToReturn.Entity;
         }
         public virtual async Task<T> AddAsync(T entity)
-        {
-            return (await _entitySet.AddAsync(entity)).Entity;
+        {   
+            Context.Entry(entity).State = EntityState.Added;
+            await Context.SaveChangesAsync();
+            return entity;
         }
         public virtual void AddRange(List<T> entities)
         {
             var enumerable = entities as IList<T> ?? entities.ToList();
             _entitySet.AddRange(enumerable);
+            Context.SaveChanges();
         }
         public virtual async Task AddRangeAsync(ICollection<T> entities)
         {
@@ -54,12 +58,14 @@ namespace Persistence.Repositories.Implementations
             {
                 return;
             }
-            await _entitySet.AddRangeAsync(entities);
+            _entitySet.AddRangeAsync(entities);
+            await Context.SaveChangesAsync();
         }
 
         public virtual void Update(T entity)
         {
             Context.Entry(entity).State = EntityState.Modified;
+            Context.SaveChanges();
         }
 
 
@@ -71,6 +77,7 @@ namespace Persistence.Repositories.Implementations
                 return false;
             }
             _entitySet.Remove(obj);
+            Context.SaveChanges();
             return true;
         }
 
@@ -81,6 +88,7 @@ namespace Persistence.Repositories.Implementations
                 return false;
             }
             Context.Entry(entity).State = EntityState.Deleted;
+            Context.SaveChanges();
             return true;
         }
 
@@ -91,16 +99,8 @@ namespace Persistence.Repositories.Implementations
                 return false;
             }
             _entitySet.RemoveRange(entities);
-            return true;
-        }
-        public virtual void SaveChanges()
-        {
             Context.SaveChanges();
-        }
-
-        public virtual async Task SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            await Context.SaveChangesAsync(cancellationToken);
+            return true;
         }
     }
 }

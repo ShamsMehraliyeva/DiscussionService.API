@@ -27,7 +27,7 @@ public class RegisterCommand : IRequest<RegisteredCommandResponse>
         public async Task<RegisteredCommandResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
            byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+           HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
 
             User newUser = new()
             {
@@ -40,14 +40,18 @@ public class RegisterCommand : IRequest<RegisteredCommandResponse>
             };
 
             User createdUser = await _userRepository.AddAsync(newUser);
-            AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
+            AccessTokenModel createdAccessTokenModel = await _authService.CreateAccessToken(createdUser);
             RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser);
             RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
             
             RegisteredCommandResponse response = new()
             {
-               RefreshToken = createdRefreshToken,
-                AccessToken = createdAccessToken
+               RefreshToken = new()
+               {
+                   Expiration = addedRefreshToken.ExpireDate,
+                   Token = addedRefreshToken.Token
+               },
+               AccessToken = createdAccessTokenModel
             };
             return response;
         }

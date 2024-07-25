@@ -16,7 +16,5 @@ namespace Application.Repositories.Abstractions
         T Add(T entity);
         Task<T> AddAsync(T entity);
         Task AddRangeAsync(ICollection<T> entities);
-        void SaveChanges();
-        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

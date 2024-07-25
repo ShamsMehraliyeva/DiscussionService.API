@@ -20,6 +20,13 @@ public class ExceptionHandlingMiddleware
         {
             await _next(context);
         }
+        catch (AggregateException aggregateException)
+        {
+            foreach (var innerException in aggregateException.InnerExceptions)
+            {
+                await HandleExceptionAsync(context, innerException);
+            }
+        }
         catch (Exception exception)
         {
             await HandleExceptionAsync(context, exception);
@@ -29,7 +36,7 @@ public class ExceptionHandlingMiddleware
     private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         context.Response.ContentType = "application/json";
-
+        string a = exception.GetType().ToString();
         if (exception.GetType() == typeof(ValidationException)) return CreateValidationException(context, exception);
         if (exception.GetType() == typeof(BusinessException)) return CreateBusinessException(context, exception);
         if (exception.GetType() == typeof(AuthorizationException))

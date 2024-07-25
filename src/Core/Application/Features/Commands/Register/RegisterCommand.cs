@@ -1,4 +1,6 @@
-﻿using Application.Repositories.Abstractions;
+﻿using Application.BusinessRules;
+using Application.CrossCuttingConcers.Exceptions;
+using Application.Repositories.Abstractions;
 using Application.Services;
 using Application.Utilities.Hashing;
 using Application.Utilities.JWT;
@@ -15,17 +17,20 @@ public class RegisterCommand : IRequest<RegisteredCommandResponse>
     public string Password { get; set; }
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisteredCommandResponse>
     {
+        private readonly AuthBusinessRules _authBusinessRules;
         private readonly IUserRepository _userRepository;
         private readonly IAuthService _authService;
 
-        public RegisterCommandHandler(IUserRepository userRepository, IAuthService authService)
+        public RegisterCommandHandler(IUserRepository userRepository, IAuthService authService, AuthBusinessRules authBusinessRules)
         {
             _userRepository = userRepository;
             _authService = authService;
+            _authBusinessRules = authBusinessRules;
         }
 
         public async Task<RegisteredCommandResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
-        {
+        { 
+           await _authBusinessRules.EmailCanNotBeDuplicatedWhenRegistered(request.Email);
            byte[] passwordHash, passwordSalt;
            HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
 

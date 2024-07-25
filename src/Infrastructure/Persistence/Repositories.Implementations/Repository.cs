@@ -1,4 +1,5 @@
-﻿using Application.Repositories.Abstractions;
+﻿using System.Linq.Expressions;
+using Application.Repositories.Abstractions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,12 @@ namespace Persistence.Repositories.Implementations
             Context = context;
             _entitySet = Context.Set<T>();
         }
+        
+        public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await Context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
+
         public virtual T Get(int id)
         {
             return _entitySet.Find(id);

@@ -13,6 +13,7 @@ namespace TestProject.API
             var builder = WebApplication.CreateBuilder(args);
             
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
+            builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             
             // Add services to the container.
 

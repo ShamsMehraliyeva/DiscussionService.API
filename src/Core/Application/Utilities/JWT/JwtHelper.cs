@@ -41,7 +41,7 @@ internal class JwtHelper : ITokenHelper
         RefreshToken refreshToken = new()
         {
             UserId = user.Id,
-            Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+            Token = RandomRefreshToken(),
             ExpireDate = DateTime.UtcNow.AddDays(7),
             CreateDate = DateTime.UtcNow
         };
@@ -69,5 +69,12 @@ internal class JwtHelper : ITokenHelper
         claims.AddNameIdentifier(user.Id.ToString());
         claims.AddName($"{user.FirstName} {user.LastName}");
         return claims;
+    }
+    private string RandomRefreshToken()
+    {
+        byte[] numberByte = new Byte[32];
+        using RandomNumberGenerator random = RandomNumberGenerator.Create();
+        random.GetBytes(numberByte);
+        return Convert.ToBase64String(numberByte);
     }
 }

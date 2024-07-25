@@ -2,9 +2,9 @@ namespace Application.CrossCuttingConcers.Logging;
 
 public interface ILoggerService
 {
-    void Information(string message);
-    void Debug(string message);
-    void Warning(string message);
-    void Error(string message);
-    void Fatal(string message);
+    void Information(LogModel logModel);
+    void Debug(LogModel logModel);
+    void Warning(LogModel logModel);
+    void Error(LogModel logModel);
+    void Fatal(LogModel logModel);
 }

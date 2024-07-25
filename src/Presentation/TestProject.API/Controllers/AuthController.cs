@@ -1,4 +1,5 @@
 ﻿using Application.CrossCuttingConcers.Exceptions;
+using Application.CrossCuttingConcers.Logging;
 using Application.Features.Commands.Register;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,6 @@ namespace TestProject.API.Controllers
     [ApiController]
     public class AuthController : BaseController
     {
-
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterCommand registerCommand)
         {

@@ -30,29 +30,38 @@ public class LoggerService:ILoggerService
     }
   
     
-    public void Information(string message)
+    public void Information(LogModel logModel)
     {
-        _logger.Information("Information log: {@message}", message);
+        logModel.Level = LogLevel.Debug;
+        logModel.CreateDate = DateTime.Now;
+        _logger.Information("Information log: {@message}", logModel);
     }
 
-    public void Debug(string message)
+    public void Debug(LogModel logModel)
     {
-        _logger.Debug("Debug log: {@message}", message);
+        logModel.Level = LogLevel.Debug;
+        logModel.CreateDate = DateTime.Now;
+        _logger.Debug("Debug log: {@message}", logModel);
     }
 
-    public void Warning(string message)
+    public void Warning(LogModel logModel)
     {
-        _logger.Warning("Warning log: {@message}", message);
+        logModel.Level = LogLevel.Debug;
+        logModel.CreateDate = DateTime.Now;
+        _logger.Warning("Warning log: {@message}", logModel);
     }
 
-    public void Error(string message)
+    public void Error(LogModel logModel)
     {
-        _logger.Error("Error log: {@message}", message);
+        logModel.Level = LogLevel.Debug;
+        logModel.CreateDate = DateTime.Now;
+        _logger.Error("Error log: {@message}", logModel);
     }
 
-    public void Fatal(string message)
+    public void Fatal(LogModel logModel)
     {
-
-        _logger.Fatal("Fatal log: {@message}", message);
+        logModel.Level = LogLevel.Debug;
+        logModel.CreateDate = DateTime.Now;
+        _logger.Fatal("Fatal log: {@message}", logModel);
     }
 }

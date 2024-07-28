@@ -1,5 +1,4 @@
 ﻿using Application.BusinessRules;
-using Application.CrossCuttingConcers.Exceptions;
 using Application.Repositories.Abstractions;
 using Application.Services;
 using Application.Utilities.Hashing;
@@ -7,7 +6,7 @@ using Application.Utilities.JWT;
 using Domain.Entities.Auth;
 using MediatR;
 
-namespace Application.Features.Commands.Register;
+namespace Application.Features.Commands.Auth.Register;
 
 public class RegisterCommand : IRequest<RegisteredCommandResponse>
 {

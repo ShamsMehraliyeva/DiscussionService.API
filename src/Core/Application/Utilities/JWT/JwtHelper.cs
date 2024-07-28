@@ -1,11 +1,11 @@
 ﻿using Application.Extensions.Security;
 using Application.Utilities.Encryption;
-using Domain.Entities.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using Domain.Entities;
 
 namespace Application.Utilities.JWT;
 

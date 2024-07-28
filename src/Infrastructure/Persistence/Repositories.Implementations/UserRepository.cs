@@ -1,5 +1,5 @@
 using Application.Repositories.Abstractions;
-using Domain.Entities.Auth;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 

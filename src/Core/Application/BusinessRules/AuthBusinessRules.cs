@@ -2,7 +2,7 @@
 using Application.CrossCuttingConcers.Exceptions;
 using Application.Repositories.Abstractions;
 using Application.Utilities.Hashing;
-using Domain.Entities.Auth;
+using Domain.Entities;
 
 namespace Application.BusinessRules;
 

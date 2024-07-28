@@ -2,7 +2,7 @@ using Application.BusinessRules;
 using Application.Repositories.Abstractions;
 using Application.Services;
 using Application.Utilities.JWT;
-using Domain.Entities.Auth;
+using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Commands.Auth.Login;

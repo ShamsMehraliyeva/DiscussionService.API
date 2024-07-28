@@ -1,6 +1,6 @@
 ﻿using Application.Repositories.Abstractions;
 using Application.Utilities.JWT;
-using Domain.Entities.Auth;
+using Domain.Entities;
 
 namespace Application.Services;
 

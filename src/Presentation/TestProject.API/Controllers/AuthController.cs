@@ -1,4 +1,5 @@
-﻿using Application.Features.Commands.Auth.Login;
+﻿using Application.Features.Auth.Commands.Refresh;
+using Application.Features.Commands.Auth.Login;
 using Application.Features.Commands.Auth.Register;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,16 @@ namespace TestProject.API.Controllers
         }
         
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody]LoginCommand registerCommand)
+        public async Task<IActionResult> Login([FromBody]LoginCommand loginCommand)
         {
-            var result = Mediator.Send(registerCommand).Result;
+            var result = Mediator.Send(loginCommand).Result;
+            return Ok(result);
+        }
+        
+        [HttpPost("Refresh")]
+        public async Task<IActionResult> Login([FromBody]RefreshCommand refreshCommand)
+        {
+            var result = Mediator.Send(refreshCommand).Result;
             return Ok(result);
         }
     }

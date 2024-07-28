@@ -31,7 +31,11 @@ namespace TestProject.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(opt =>
             {
-                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyAPI", Version = "v1" });
+                opt.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "DiscussionService.API",
+                    Version = "v1"
+                });
                 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -86,7 +90,10 @@ namespace TestProject.API
             // Configure the HTTP request pipeline.
             
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Discussion Service API V1");
+            });
 
             app.ConfigureMiddlewares();
 

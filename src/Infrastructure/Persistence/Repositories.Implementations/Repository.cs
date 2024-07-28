@@ -74,7 +74,11 @@ namespace Persistence.Repositories.Implementations
             Context.Entry(entity).State = EntityState.Modified;
             Context.SaveChanges();
         }
-
+        public virtual async Task UpdateAsync(T entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+            await Context.SaveChangesAsync();
+        }
 
         public virtual bool Delete(int id)
         {

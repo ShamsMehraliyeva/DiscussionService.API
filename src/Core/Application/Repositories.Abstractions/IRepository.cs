@@ -17,6 +17,7 @@ namespace Application.Repositories.Abstractions
         void Update(T entity);
         T Add(T entity);
         Task<T> AddAsync(T entity);
+        Task UpdateAsync(T entity);
         Task AddRangeAsync(ICollection<T> entities);
     }
 }

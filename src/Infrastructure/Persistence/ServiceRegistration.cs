@@ -18,6 +18,7 @@ public static class ServiceRegistration
 
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITopicRepository, TopicRepository>();
 
         return services;
     }

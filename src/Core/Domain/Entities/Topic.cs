@@ -9,10 +9,15 @@ public class Topic : BaseEntity
     public Topic()
     {
     }
-    
+    public Topic(string title, string description)
+    {
+        Title = title;
+        Description = description;
+    }
     public Topic(int id, string title, string description) : base(id)
     {
         Title = title;
         Description = description;
     }
+    
 }

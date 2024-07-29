@@ -9,6 +9,7 @@
         public byte[] PasswordHash { get; set; }
         public bool Status { get; set; }
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
         public User()
         {
             RefreshTokens = new HashSet<RefreshToken>();

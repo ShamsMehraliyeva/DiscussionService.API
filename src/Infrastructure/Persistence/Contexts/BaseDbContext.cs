@@ -9,6 +9,8 @@ public class BaseDbContext : DbContext
     protected IConfiguration Configuration { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<Topic> Topics { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
 
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)

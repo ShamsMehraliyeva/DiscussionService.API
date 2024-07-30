@@ -7,12 +7,16 @@ public class RegisterCommandValidator:AbstractValidator<RegisterCommand>
     public RegisterCommandValidator()
     {
         RuleFor(c => c.Email)
-            .NotEmpty();
+            .NotEmpty()
+            .WithMessage("'Email' should not be empty");
         RuleFor(c => c.FirstName)
-            .NotEmpty();
+            .NotEmpty()
+            .WithMessage("'FirstName' should not be empty");
         RuleFor(c => c.LastName)
-            .NotEmpty();
+            .NotEmpty()
+            .WithMessage("'LastName' should not be empty");
         RuleFor(c => c.Password)
-            .NotEmpty();
+            .NotEmpty()
+            .WithMessage("'Password' should not be empty");
     }
 }

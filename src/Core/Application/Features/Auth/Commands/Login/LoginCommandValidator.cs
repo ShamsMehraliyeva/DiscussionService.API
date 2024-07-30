@@ -7,8 +7,10 @@ public class LoginCommandValidator:AbstractValidator<LoginCommand>
     public LoginCommandValidator()
     {
         RuleFor(c => c.Email)
-            .NotEmpty();
+            .NotEmpty()
+            .WithMessage("'Email' should not be empty");
         RuleFor(c => c.Password)
-            .NotEmpty();
+            .NotEmpty()
+            .WithMessage("'Password' should not be empty");
     }
 }

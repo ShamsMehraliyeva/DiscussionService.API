@@ -8,10 +8,9 @@ public class CreateTopicCommandValidator:AbstractValidator<CreateTopicCommand>
     {
         RuleFor(c => c.Title)
             .NotEmpty()
-            .MinimumLength(5)
-            .MaximumLength(50);
+            .WithMessage("'Title' should not be empty");
         RuleFor(c => c.Description)
             .NotEmpty()
-            .MinimumLength(5);
+            .WithMessage("'Description' should not be empty");
     }
 }

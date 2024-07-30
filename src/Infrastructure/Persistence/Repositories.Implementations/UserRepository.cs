@@ -17,6 +17,6 @@ public class UserRepository:Repository<User>,IUserRepository
     {
         return await _context.Users
             .Include(u => u.RefreshTokens)
-            .FirstOrDefaultAsync(u => u.RefreshTokens.Any(r => r.Token == refreshToken));
+            .FirstOrDefaultAsync(u => u.RefreshTokens.Any(r => r.Token == refreshToken && r.ExpireDate>=DateTime.UtcNow));
     }
 }

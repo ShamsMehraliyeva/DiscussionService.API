@@ -26,13 +26,13 @@ public class RefreshCommand: IRequest<RefreshCommandResponse>
 
         public async Task<RefreshCommandResponse> Handle(RefreshCommand request, CancellationToken cancellationToken)
         {
-            User user = await _userRepository.GetByRefreshTokenAsync(request.RefreshToken);
-            
-            await _authBusinessRules.UserShouldsBeExists(user);
-            
+            var user = await _userRepository.GetByRefreshTokenAsync(request.RefreshToken);
+            await _authBusinessRules.TokenShouldsBeExists(user);
+
+            var currentRefreshToken = user.RefreshTokens.OrderDescending().LastOrDefault();
             AccessTokenModel createdAccessTokenModel = await _authService.CreateAccessToken(user);
             RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(user);
-            RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+            RefreshToken addedRefreshToken = await _authService.UpdateRefreshToken(currentRefreshToken, createdRefreshToken);
             
             RefreshCommandResponse response = new()
             {

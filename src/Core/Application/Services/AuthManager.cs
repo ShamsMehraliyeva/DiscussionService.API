@@ -20,6 +20,16 @@ public class AuthManager : IAuthService
         return addedRefreshToken;
     }
 
+    public async Task<RefreshToken> UpdateRefreshToken(RefreshToken currentRefreshToken, RefreshToken newRefreshToken)
+    {
+        currentRefreshToken.ExpireDate = DateTime.UtcNow;
+        await _refreshTokenRepository.UpdateAsync(currentRefreshToken);
+        
+        RefreshToken addedRefreshToken = await _refreshTokenRepository.AddAsync(newRefreshToken);
+        return addedRefreshToken;
+    }
+
+
     public async Task<AccessTokenModel> CreateAccessToken(User user)
     {
         AccessTokenModel accessTokenModel = _tokenHelper.CreateToken(user);

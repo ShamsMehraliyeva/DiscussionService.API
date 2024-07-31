@@ -3,6 +3,7 @@ using Application.Repositories.Abstractions;
 using Application.Services;
 using Application.Utilities.Hashing;
 using Application.Utilities.JWT;
+using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
@@ -16,15 +17,17 @@ public class RegisterCommand : IRequest<RegisteredCommandResponse>
     public string Password { get; set; }
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisteredCommandResponse>
     {
+        private readonly IMapper _mapper;
         private readonly AuthBusinessRules _authBusinessRules;
         private readonly IUserRepository _userRepository;
         private readonly IAuthService _authService;
 
-        public RegisterCommandHandler(IUserRepository userRepository, IAuthService authService, AuthBusinessRules authBusinessRules)
+        public RegisterCommandHandler(IUserRepository userRepository, IAuthService authService, AuthBusinessRules authBusinessRules, IMapper mapper)
         {
             _userRepository = userRepository;
             _authService = authService;
             _authBusinessRules = authBusinessRules;
+            _mapper = mapper;
         }
 
         public async Task<RegisteredCommandResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -50,12 +53,8 @@ public class RegisterCommand : IRequest<RegisteredCommandResponse>
             
             RegisteredCommandResponse response = new()
             {
-               RefreshToken = new()
-               {
-                   Expiration = addedRefreshToken.ExpireDate,
-                   Token = addedRefreshToken.Token
-               },
-               AccessToken = createdAccessTokenModel
+                RefreshToken = _mapper.Map<RefreshTokenModel>(addedRefreshToken),
+                AccessToken = createdAccessTokenModel
             };
             return response;
         }

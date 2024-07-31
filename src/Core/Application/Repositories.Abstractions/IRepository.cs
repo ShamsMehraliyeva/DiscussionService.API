@@ -6,10 +6,10 @@ namespace Application.Repositories.Abstractions
     public interface IRepository<T>
            where T : BaseEntity
     {
+        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T?> GetAsync(Expression<Func<T, bool>> predicate);
         Task<T> GetAsync(int id, CancellationToken cancellationToken);
         IQueryable<T> GetAll(bool noTracking = false);
-        Task<List<T>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking = false);
         T Get(int id);
         bool Delete(int id);
         bool Delete(T entity);
@@ -17,7 +17,9 @@ namespace Application.Repositories.Abstractions
         void Update(T entity);
         T Add(T entity);
         Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
         Task AddRangeAsync(ICollection<T> entities);
+        Task UpdateAsync(T entity);
+        Task UpdateRangeAsync(IEnumerable<T> entities);
+
     }
 }

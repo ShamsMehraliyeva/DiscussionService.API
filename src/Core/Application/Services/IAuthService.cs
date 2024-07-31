@@ -8,5 +8,7 @@ namespace Application.Services
         public Task<AccessTokenModel> CreateAccessToken(User user);
         public Task<RefreshToken> CreateRefreshToken(User user);
         public Task<RefreshToken> AddRefreshToken(RefreshToken refreshToken);
+        Task RevokeRefreshTokens(ICollection<RefreshToken> tokens);
+        Task<RefreshToken> UpdateRefreshTokenTransaction(RefreshToken token);
     }
 }

@@ -2,6 +2,7 @@
 using Application.Repositories.Abstractions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Persistence.Repositories.Implementations
 {
@@ -20,6 +21,14 @@ namespace Persistence.Repositories.Implementations
         public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return await Context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
+
+        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
+        {
+            var query = Context.Set<T>().Where(method);
+            if (!tracking)
+                query = query.AsNoTracking();
+            return query;
         }
 
         public virtual T Get(int id)
@@ -79,7 +88,14 @@ namespace Persistence.Repositories.Implementations
             Context.Entry(entity).State = EntityState.Modified;
             await Context.SaveChangesAsync();
         }
-
+        public virtual async Task UpdateRangeAsync(IEnumerable<T> entities)
+        {
+            foreach (var entity in entities)
+            {
+                Context.Entry(entity).State = EntityState.Modified;
+            }
+            await Context.SaveChangesAsync();
+        }
         public virtual bool Delete(int id)
         {
             var obj = _entitySet.Find(id);

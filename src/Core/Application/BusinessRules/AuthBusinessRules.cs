@@ -23,10 +23,6 @@ public class AuthBusinessRules
     {
         if (user == null) throw new AuthorizationException(AuthMessages.UserDontExists);
     }
-    public async Task TokenShouldsBeExists(User? user)
-    {
-        if (user == null) throw new AuthorizationException(AuthMessages.TokenDontExists);
-    }
     public async Task UserPasswordShouldBeMatch(User? user, string password)
     {
         if (!HashingHelper.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))

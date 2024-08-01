@@ -14,5 +14,9 @@
         {
             RefreshTokens = new HashSet<RefreshToken>();
         }
+
+        public User(int id):base(id)
+        {
+        }
     }
 }

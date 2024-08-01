@@ -103,4 +103,17 @@ internal class JwtHelper : ITokenHelper
             return null;
         }
     }
+
+    public int GetUserIdFromToken()
+    {
+        var token = this.GetToken();
+        var userIdClaim = this.GetUserClaim(token, ClaimTypes.NameIdentifier);
+
+        if (!int.TryParse(userIdClaim, out int userId))
+        {
+            throw new InvalidOperationException("User ID claim is not valid.");
+        }
+
+        return userId;
+    }
 }

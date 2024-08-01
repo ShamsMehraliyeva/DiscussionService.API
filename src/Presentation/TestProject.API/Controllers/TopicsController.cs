@@ -1,3 +1,4 @@
+using Application.Features.Topics.Commands.AddComment;
 using Application.Features.Topics.Commands.CreateTopic;
 using Application.Features.Topics.Queries.GetTopicById;
 using Application.Features.Topics.Queries.GetTopicList;
@@ -27,6 +28,13 @@ public class TopicsController : BaseController
     public IActionResult Get([FromRoute]GetTopicByIdQuery getTopicByIdQuery)
     {
         var result = Mediator.Send(getTopicByIdQuery).Result;
+        return Ok(result);
+    }
+    
+    [HttpPost("addComment")]
+    public IActionResult AddComment([FromBody]AddCommentCommand addCommentCommand)
+    {
+        var result = Mediator.Send(addCommentCommand).Result;
         return Ok(result);
     }
 }

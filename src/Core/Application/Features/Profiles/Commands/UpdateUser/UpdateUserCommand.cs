@@ -22,7 +22,7 @@ public class UpdateUserCommand: IRequest<UpdateUserCommandResponse>
         }
         public async Task<UpdateUserCommandResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            int userId = Convert.ToInt32(_tokenHelper.GetUserClaim(_tokenHelper.GetToken(), ClaimTypes.NameIdentifier));
+            int userId = _tokenHelper.GetUserIdFromToken();
 
             var getUser = await _userRepository.GetAsync(x=>x.Id == userId);
             getUser.FirstName = request.FirstName;

@@ -19,6 +19,7 @@ public static class ServiceRegistration
         
         //Busines Rules
         services.AddScoped<AuthBusinessRules>();
+        services.AddScoped<TopicBusinessRules>();
         
         //Services
         services.AddScoped<ILoggerService, LoggerService>();

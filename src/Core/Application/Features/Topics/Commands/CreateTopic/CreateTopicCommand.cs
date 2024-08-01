@@ -1,4 +1,5 @@
 using Application.Repositories.Abstractions;
+using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
@@ -11,16 +12,18 @@ public class CreateTopicCommand: IRequest<CreateTopicCommandResponse>
     
     public class CreateTopicCommandHandler: IRequestHandler<CreateTopicCommand, CreateTopicCommandResponse>
     {
+        private readonly IMapper _mapper;
         private readonly ITopicRepository _topicRepository;
 
-        public CreateTopicCommandHandler(ITopicRepository topicRepository)
+        public CreateTopicCommandHandler(ITopicRepository topicRepository, IMapper mapper)
         {
             _topicRepository = topicRepository;
+            _mapper = mapper;
         }
 
         public async Task<CreateTopicCommandResponse> Handle(CreateTopicCommand request, CancellationToken cancellationToken)
         {
-            Topic addTopic = new Topic(request.Title, request.Description);
+            Topic addTopic = _mapper.Map<Topic>(request);
             await _topicRepository.AddAsync(addTopic);
             return new CreateTopicCommandResponse();
         }

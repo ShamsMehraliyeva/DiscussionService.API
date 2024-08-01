@@ -1,4 +1,5 @@
 using Application.Repositories.Abstractions;
+using AutoMapper;
 using Domain.Dtos;
 using Domain.Entities;
 using MediatR;
@@ -9,22 +10,20 @@ public class GetTopicListQuery: IRequest<GetTopicListQueryResponse>
 {
     public class GetTopicListQueryHanler: IRequestHandler<GetTopicListQuery, GetTopicListQueryResponse>
     {
+        private readonly IMapper _mapper;
         private readonly ITopicRepository _topicRepository;
 
-        public GetTopicListQueryHanler(ITopicRepository topicRepository)
+        public GetTopicListQueryHanler(ITopicRepository topicRepository, IMapper mapper)
         {
             _topicRepository = topicRepository;
+            _mapper = mapper;
         }
 
         public async Task<GetTopicListQueryResponse> Handle(GetTopicListQuery request, CancellationToken cancellationToken)
         {
             GetTopicListQueryResponse response = new();
-            List<Topic> getTopics = _topicRepository.GetAll().ToList();
-            foreach (var topic in getTopics)
-            {
-                response.Topics.Add(new TopicDto(){Id = topic.Id, Title = topic.Title, Description = topic.Description});
-            }
-
+            List<Topic> getTopicsList= _topicRepository.GetAll().ToList();
+            response.Topics = _mapper.Map<List<TopicDto>>(getTopicsList);
             return response;
         }
     }

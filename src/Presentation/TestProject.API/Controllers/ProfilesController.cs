@@ -1,5 +1,6 @@
 using Application.Features.Profiles.Commands.UpdateUser;
 using Application.Features.Profiles.Queries.GetCurrentUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TestProject.API.Controllers;

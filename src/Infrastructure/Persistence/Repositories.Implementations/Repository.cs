@@ -35,7 +35,7 @@ namespace Persistence.Repositories.Implementations
         {
             return _entitySet.Find(id);
         }
-        public virtual async Task<T> GetAsync(int id, CancellationToken cancellationToken)
+        public virtual async Task<T> GetAsync(int id)
         {
             return await _entitySet.FindAsync((object)id);
         }

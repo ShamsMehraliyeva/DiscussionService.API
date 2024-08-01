@@ -8,7 +8,7 @@ namespace Application.Repositories.Abstractions
     {
         IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T?> GetAsync(Expression<Func<T, bool>> predicate);
-        Task<T> GetAsync(int id, CancellationToken cancellationToken);
+        Task<T> GetAsync(int id);
         IQueryable<T> GetAll(bool noTracking = false);
         T Get(int id);
         bool Delete(int id);

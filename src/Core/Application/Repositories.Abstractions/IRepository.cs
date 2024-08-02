@@ -1,12 +1,15 @@
 ﻿using System.Linq.Expressions;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Application.Repositories.Abstractions
 {
     public interface IRepository<T>
            where T : BaseEntity
     {
-        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
+        IQueryable<T> GetWhere(Expression<Func<T, bool>> method,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+            bool tracking = true);
         Task<T?> GetAsync(Expression<Func<T, bool>> predicate);
         Task<T> GetAsync(int id);
         IQueryable<T> GetAll(bool noTracking = false);

@@ -20,8 +20,8 @@ public class RefreshTokenRepository : Repository<RefreshToken>, IRefreshTokenRep
             try
             {
                 var activeUserTokens = this.GetWhere(x=>
-                        x.UserId == newRefreshToken.UserId 
-                        && x.ExpireDate>=DateTime.UtcNow).ToList();
+                    x.UserId == newRefreshToken.UserId 
+                    && x.ExpireDate>=DateTime.UtcNow).ToList();
                 
                 activeUserTokens = activeUserTokens.Select(token => 
                 {

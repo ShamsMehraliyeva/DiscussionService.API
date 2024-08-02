@@ -1,5 +1,6 @@
 using Application.Features.Topics.Commands.AddComment;
 using Application.Features.Topics.Commands.CreateTopic;
+using Application.Features.Topics.Queries.GetComments;
 using Application.Features.Topics.Queries.GetTopicById;
 using Application.Features.Topics.Queries.GetTopicList;
 using Microsoft.AspNetCore.Authorization;
@@ -34,6 +35,13 @@ public class TopicsController : BaseController
     public IActionResult AddComment([FromBody]AddCommentCommand addCommentCommand)
     {
         var result = Mediator.Send(addCommentCommand).Result;
+        return Ok(result);
+    }
+    
+    [HttpGet("{id}/comments")]
+    public IActionResult GetComments(GetCommentsQuery commentsQuery)
+    {
+        var result = Mediator.Send(commentsQuery).Result;
         return Ok(result);
     }
 }

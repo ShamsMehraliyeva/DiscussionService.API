@@ -23,9 +23,13 @@ namespace Persistence.Repositories.Implementations
             return await Context.Set<T>().FirstOrDefaultAsync(predicate);
         }
 
-        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
+        public IQueryable<T> GetWhere(Expression<Func<T, bool>> method,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>>? includes = null,
+            bool tracking = true)
         {
             var query = Context.Set<T>().Where(method);
+            if (includes != null)
+                query = includes(query);
             if (!tracking)
                 query = query.AsNoTracking();
             return query;

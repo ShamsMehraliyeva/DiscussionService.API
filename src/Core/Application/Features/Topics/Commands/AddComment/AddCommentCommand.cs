@@ -9,7 +9,7 @@ namespace Application.Features.Topics.Commands.AddComment;
 
 public class AddCommentCommand : IRequest<AddCommentCommandResponse>
 {
-    public int Id { get; set; }
+    public int TopicId { get; set; }
     public string? Content { get; set; }
 
     public class AddCommentCommandHandler : IRequestHandler<AddCommentCommand, AddCommentCommandResponse>
@@ -35,7 +35,7 @@ public class AddCommentCommand : IRequest<AddCommentCommandResponse>
             {
                 Content = request.Content,
                 UserId = userId,
-                TopicId = request.Id
+                TopicId = request.TopicId
             };
             await _commentRepository.AddAsync(createdComment);
 

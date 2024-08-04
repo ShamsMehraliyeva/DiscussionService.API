@@ -3,12 +3,10 @@ using Application.Features.Topics.Commands.CreateTopic;
 using Application.Features.Topics.Queries.GetComments;
 using Application.Features.Topics.Queries.GetTopicById;
 using Application.Features.Topics.Queries.GetTopicList;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TestProject.API.Controllers;
 
-[AllowAnonymous]
 public class TopicsController : BaseController
 {
     [HttpPost]

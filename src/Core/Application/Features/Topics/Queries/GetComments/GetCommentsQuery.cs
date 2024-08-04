@@ -10,7 +10,7 @@ namespace Application.Features.Topics.Queries.GetComments;
 
 public class GetCommentsQuery:IRequest<GetCommentsQueryResponse>
 {
-    [FromRoute] public int Id { get; set; }
+    public int Id { get; set; }
     
     public class GetCommentsQueryHandler: IRequestHandler<GetCommentsQuery, GetCommentsQueryResponse>
     {

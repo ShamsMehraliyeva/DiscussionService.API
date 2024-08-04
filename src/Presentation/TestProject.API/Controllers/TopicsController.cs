@@ -23,8 +23,9 @@ public class TopicsController : BaseController
     }
     
     [HttpGet("{id}")]
-    public IActionResult Get([FromRoute]GetTopicByIdQuery getTopicByIdQuery)
+    public IActionResult Get([FromRoute]int id)
     {
+        GetTopicByIdQuery getTopicByIdQuery = new GetTopicByIdQuery() { Id = id };
         var result = Mediator.Send(getTopicByIdQuery).Result;
         return Ok(result);
     }
@@ -37,8 +38,9 @@ public class TopicsController : BaseController
     }
     
     [HttpGet("{id}/comments")]
-    public IActionResult GetComments(GetCommentsQuery commentsQuery)
+    public IActionResult GetComments([FromRoute]int id)
     {
+        GetCommentsQuery commentsQuery = new GetCommentsQuery() { Id = id };
         var result = Mediator.Send(commentsQuery).Result;
         return Ok(result);
     }
